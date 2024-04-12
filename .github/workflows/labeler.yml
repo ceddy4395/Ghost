@@ -1,3 +1,4 @@
+# Automatically label PRs
 name: PR labeler
 on:
   - pull_request_target
@@ -6,6 +7,9 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    runs-on: ubuntu-22.04
+    if: github.repository == 'tryghost/ghost'
     steps:
-      - uses: actions/labeler@v4
+      - name: Run labeler
+        uses: actions/labeler@ac9175f

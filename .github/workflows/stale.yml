@@ -1,3 +1,4 @@
+# Close issues which have been open for 120 days.
 name: 'Close stale issues and PRs'
 on:
   schedule:
@@ -5,9 +6,13 @@ on:
 jobs:
   stale:
     if: github.repository_owner == 'TryGhost'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    timeout-minutes: 1
+    permissions:
+      issues: write
     steps:
-      - uses: actions/stale@v8
+      - name: Mark stale issues
+        uses: actions/stale@1160a22
         with:
           stale-issue-message: |
             Our bot has automatically marked this issue as stale because there has not been any activity here in some time.

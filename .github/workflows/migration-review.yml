@@ -7,11 +7,15 @@ on:
       - 'ghost/core/core/server/data/migrations/versions/**'
 jobs:
   createComment:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.repository_owner == 'TryGhost'
     name: Add migration review requirements
+    timeout-minutes: 1
+    permissions:
+      pull-requests: write
     steps:
-      - uses: actions/github-script@v6
+      - name: Add migration label to pr
+        uses: actions/github-script@d7906e4
         with:
           script: |
             github.rest.issues.addLabels({
@@ -21,7 +25,8 @@ jobs:
               labels: ["migration"]
             })
 
-      - uses: peter-evans/create-or-update-comment@ac8e6509d7545ebc2e5e7c35eaa12195c2f77adc
+      - name: Add migration comment to pr
+        uses: peter-evans/create-or-update-comment@ac8e6509d7545ebc2e5e7c35eaa12195c2f77adc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |

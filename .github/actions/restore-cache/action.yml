@@ -19,7 +19,7 @@ runs:
         key: ${{ github.sha }}
 
     - name: Check if caches are restored
-      uses: actions/github-script@v6
+      uses: actions/github-script@d7906e4
       if: steps.dep-cache.outputs.cache-hit != 'true' || steps.build-cache.outputs.cache-hit != 'true'
       with:
         script: core.setFailed('Dependency or build cache could not be restored - please re-run ALL jobs.')

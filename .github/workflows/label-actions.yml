@@ -1,3 +1,4 @@
+# Run our custom labeler
 name: 'Label Issues'
 
 on:
@@ -7,7 +8,7 @@ on:
   pull_request_target:
     types: [closed, labeled]
   schedule:
-    - cron:  '0 * * * *'
+    - cron: '0 * * * *'
 
 permissions:
   issues: write
@@ -15,7 +16,9 @@ permissions:
 
 jobs:
   action:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.repository_owner == 'TryGhost'
+    timeout-minutes: 1
     steps:
-      - uses: tryghost/actions/actions/label-actions@main
+      - name: Run own labeler
+        uses: tryghost/actions/actions/label-actions@main
